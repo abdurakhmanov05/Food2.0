@@ -1,3 +1,34 @@
+let slides = document.querySelectorAll('.offer__slide')
+let prev = document.querySelector('.offer__slider-prev')
+let next = document.querySelector('.offer__slider-next')
+
+let slideIndex = 1
+
+function showSlides(n) {
+    if(n > slides.length) {
+        slideIndex = 1
+    }
+    if(n < 1) {
+        slideIndex = slides.length
+    }
+
+    slides.forEach(slide => slide.classList.add('hide'))
+
+    console.log(n);
+    slides[slideIndex -1].classList.remove('hide')
+    slides[slideIndex -1].classList.add('fade')
+}
+showSlides(slideIndex)
+
+next.onclick = () => {
+    slideIndex++
+    showSlides(slideIndex)
+}
+prev.onclick = () => {
+    slideIndex--
+    showSlides(slideIndex)
+}
+
 let tabcontents = document.querySelectorAll('.tabcontent')
 let tabheader__items = document.querySelectorAll('.tabheader__items .tabheader__item')
 
@@ -79,7 +110,7 @@ actBtns.forEach(btn => {
 })
 
 let timer = document.querySelector('.timer')
-let deadline = '12-12-2023'
+let deadline = '2023 05 20 00:00'
 
 function reaminingTime(endTime) {
     let t = Date.parse(endTime) - Date.parse(new Date()),
@@ -115,8 +146,41 @@ function showTime(endTime, selector) {
         if(t.t <= 0) {
             clearInterval(updateTime)
         }
-
     }
 }
 
 showTime(deadline, '.timer')
+
+let attr = document.querySelectorAll('button[data-modal]'),
+    modalWindow = document.querySelector('.modal'),
+    modalBlack = document.querySelector('.container'),
+    close = document.querySelector('.modal__close'),
+    body = document.body;
+
+function open () {
+    modalWindow.style.display = 'block'
+    setTimeout(() => {
+        modalBlack.style.opacity = '0.7'
+        modalWindow.style.opacity = '1'
+    }, 200)
+}
+
+attr.forEach(btn => {
+    btn.onclick = () => {
+        open()
+    }
+})
+
+close.onclick = () => {
+    modalBlack.style.opacity = '1'
+    modalWindow.style.opacity = '0'
+    setTimeout(() => {
+        modalWindow.style.display = 'none'
+    }, 200)
+}
+
+body.onscroll = () => {
+    if (Math.ceil(window.innerHeight + window.scrollY) >= body.offsetHeight) {
+        open()
+    }
+}
