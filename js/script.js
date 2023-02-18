@@ -96,6 +96,8 @@ actBtns.forEach(btn => {
 
         active = activeCount
 
+        if(weight && height && age) {
+
         if(gender === 'woman') {
             let res = 655.1 + 9.563 * weight + 1.85 * height - 4.676 * age;
 
@@ -105,7 +107,7 @@ actBtns.forEach(btn => {
 
             resultView.innerHTML = Math.round(res * active)
         }
-
+       }
     }
 })
 
